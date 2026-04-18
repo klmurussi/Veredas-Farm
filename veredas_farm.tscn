@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bqrbbpjyn6qfc" path="res://assets/Tilemap/spritesheet.png" id="1_8bfbm"]
 [ext_resource type="Script" uid="uid://pck7ykq64r0t" path="res://gerador_mundo.gd" id="2_aibjm"]
+[ext_resource type="Script" uid="uid://bfka7tuesaosc" path="res://jogador.gd" id="3_kcbiw"]
 [ext_resource type="Texture2D" uid="uid://8tpqw6blt4g0" path="res://assets/Player/Player.png" id="3_vtumg"]
 [ext_resource type="Texture2D" uid="uid://d0yn4ktcpb4qy" path="res://assets/Player/Player_Actions.png" id="4_kcbiw"]
 
@@ -482,45 +483,6 @@ terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
 custom_data_layer_0/name = "tipo_chao"
 custom_data_layer_0/type = 4
 sources/1 = SubResource("TileSetAtlasSource_aibjm")
-
-[sub_resource type="GDScript" id="GDScript_vtumg"]
-script/source = "extends CharacterBody2D
-
-@onready var _animated_sprite = $\"AnimatedSprite2D\"
-@onready var _tilemap = $\"../BaseInicial\"
-
-const vel = 40.0
-
-var ultima_direcao = Vector2.DOWN
-
-func _physics_process(_delta: float) -> void:
-	var direcao = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")
-	
-	if direcao:
-		velocity = direcao * vel
-		ultima_direcao = direcao
-		
-		if direcao.y > 0:
-			_animated_sprite.play(\"walk_down\")
-		elif direcao.y < 0:
-			_animated_sprite.play(\"walk_up\")
-		elif direcao.x != 0:
-			_animated_sprite.play(\"walk_side\")
-			_animated_sprite.flip_h = direcao.x < 0
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO, vel)
-		
-		if ultima_direcao.y > 0:
-			_animated_sprite.play(\"idle_down\")
-		elif ultima_direcao.y < 0:
-			_animated_sprite.play(\"idle_up\")
-		elif ultima_direcao.x != 0:
-			_animated_sprite.play(\"idle_side\")
-			_animated_sprite.flip_h = ultima_direcao.x < 0
-
-
-	move_and_slide()
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vtumg"]
 atlas = ExtResource("3_vtumg")
@@ -1192,7 +1154,7 @@ script = ExtResource("2_aibjm")
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1484409324]
 z_index = 4
 y_sort_enabled = true
-script = SubResource("GDScript_vtumg")
+script = ExtResource("3_kcbiw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1430969729]
 y_sort_enabled = true
